@@ -901,7 +901,7 @@ function Legal({ path }) {
   return (
     <>
       <PageIntro eyebrow="STUDIO INFORMATION" title={data.title}>
-        <p>Last reviewed for this local build: September 21, 2026.</p>
+        <p>Last updated: September 21, 2026.</p>
       </PageIntro>
       <div className="legal-layout section">
         <nav aria-label="On this page">
