@@ -15,6 +15,7 @@ const titles = {
 };
 const email =
   import.meta.env.VITE_CONTACT_EMAIL || "dustin.snellings@durwoodstudios.com";
+const staticRelease = import.meta.env.VITE_STATIC_RELEASE === "true";
 const isLocal = ["localhost", "127.0.0.1"].includes(window.location.hostname);
 function Arrow() {
   return <span aria-hidden="true">↗</span>;
@@ -318,11 +319,12 @@ function Home() {
 }
 function Store() {
   const [state, setState] = useState({
-    loading: true,
+    loading: !staticRelease,
     products: [],
     error: "",
   });
   useEffect(() => {
+    if (staticRelease) return;
     const controller = new AbortController();
     fetch("/api/catalog", { signal: controller.signal })
       .then(async (r) => {
@@ -692,7 +694,19 @@ function Contact({ accessibility = false }) {
           </a>
         </PageIntro>
         <section className="contact-layout section">
-          {receipt ? (
+          {staticRelease ? (
+            <div className="receipt">
+              <p className="eyebrow">LET’S TALK</p>
+              <h2>A direct line to the studio.</h2>
+              <p>
+                Online inquiries are coming soon. For now, email us about
+                projects, products or accessibility.
+              </p>
+              <a className="button" href={`mailto:${email}`}>
+                Email the studio <Arrow />
+              </a>
+            </div>
+          ) : receipt ? (
             <div className="receipt" role="status">
               <p className="eyebrow">RECEIVED</p>
               <h2>You’re in the inbox.</h2>
@@ -795,7 +809,7 @@ function Contact({ accessibility = false }) {
           <p className="form-note contact-direct">
             Prefer email? <a href={`mailto:${email}`}>{email}</a>
           </p>
-          {isLocal && (
+          {isLocal && !staticRelease && (
             <p className="form-note">
               Local preview: inquiries save to the development service on this
               Mac.
@@ -809,20 +823,35 @@ function Contact({ accessibility = false }) {
 const legal = {
   "/privacy": {
     title: "Privacy, plainly.",
-    paras: [
-      [
-        "Inquiry forms",
-        "The form sends your name, email, topic and message to the studio service. A receipt appears only after your inquiry is saved. In this local preview, the service runs on this Mac. Authorized DSOS access can retrieve inquiries when the operator explicitly syncs.",
-      ],
-      [
-        "Storage and access",
-        "This preview uses no advertising pixels, analytics or session replay. Inquiry contents are encrypted in the local service database; its encryption key is held separately on the same Mac. Authorized sync copies inquiries into the encrypted DSOS workspace. There is no automatic deletion schedule yet; retention and deletion operations must be defined before collecting public inquiries.",
-      ],
-      [
-        "Before public launch",
-        "Hosting providers may process request and security logs. The final hosting provider, retention practices, business contact, and applicable privacy rights must be documented before the website is published. This page describes the local build, not an established production privacy program.",
-      ],
-    ],
+    paras: staticRelease
+      ? [
+          [
+            "Contact",
+            "This release does not collect inquiry forms or process purchases. Emailing the studio shares your email address and the information you choose to send with us and our email provider so we can respond. Please do not send passwords, payment details or sensitive records.",
+          ],
+          [
+            "Hosting and preferences",
+            "Cloudflare hosts this website and may process connection information, including IP addresses and request logs, to deliver and protect it. We do not add advertising pixels, analytics or session replay. Your animation preference is saved in your browser’s local storage.",
+          ],
+          [
+            "Questions and requests",
+            "Contact dustin.snellings@durwoodstudios.com about privacy or to request deletion of correspondence. We will review requests and any applicable recordkeeping requirements. This public website has no access to the studio’s private operational vault.",
+          ],
+        ]
+      : [
+          [
+            "Inquiry forms",
+            "The form sends your name, email, topic and message to the studio service. A receipt appears only after your inquiry is saved. In this local preview, the service runs on this Mac. Authorized DSOS access can retrieve inquiries when the operator explicitly syncs.",
+          ],
+          [
+            "Storage and access",
+            "This preview uses no advertising pixels, analytics or session replay. Inquiry contents are encrypted in the local service database; its encryption key is held separately on the same Mac. Authorized sync copies inquiries into the encrypted DSOS workspace. There is no automatic deletion schedule yet; retention and deletion operations must be defined before collecting public inquiries.",
+          ],
+          [
+            "Before public launch",
+            "Hosting providers may process request and security logs. The final hosting provider, retention practices, business contact, and applicable privacy rights must be documented before the website is published. This page describes the local build, not an established production privacy program.",
+          ],
+        ],
   },
   "/terms": {
     title: "Website use.",
@@ -862,7 +891,7 @@ const legal = {
       ],
       [
         "Report a barrier",
-        "Email dustin.snellings@durwoodstudios.com with the page, action, device, and problem, or use the contact form.",
+        "Email dustin.snellings@durwoodstudios.com with the page, action, device, and problem.",
       ],
     ],
   },

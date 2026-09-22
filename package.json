@@ -13,7 +13,8 @@
     "format:check": "prettier --check .",
     "lint:staged": "lint-staged",
     "lint": "eslint . --max-warnings 0",
-    "check": "npm run format:check && npm run lint && npm run build && npm run test:sites"
+    "check": "npm run format:check && npm run lint && npm run build && npm run test:sites",
+    "build:static": "VITE_STATIC_RELEASE=true npm run build"
   },
   "dependencies": {
     "@vitejs/plugin-react": "5.0.4",
