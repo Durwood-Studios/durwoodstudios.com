@@ -394,6 +394,15 @@ function Store() {
           </div>
         )}
       </section>
+      <section className="section" aria-label="Digital purchase policy">
+        <p>
+          <strong>All digital sales are final.</strong> No refunds for change of
+          mind, except where required by applicable law.
+        </p>
+        <Link to="/terms#section-3" className="text-link">
+          Read the purchase policy <Arrow />
+        </Link>
+      </section>
       <Closing />
     </>
   );
@@ -829,6 +838,10 @@ const legal = {
       [
         "Content and rights",
         "Do not assume that all educational material or experimental source is commercially licensed. Product-specific licenses and third-party rights govern any reuse. Illustrations are concept artwork, not photographs of completed Durwood products.",
+      ],
+      [
+        "All digital sales are final",
+        "We do not offer refunds for change of mind on digital purchases, except where required by applicable law. This policy does not limit your statutory rights. Contact dustin.snellings@durwoodstudios.com about duplicate charges, delivery failures, or material defects so we can investigate and provide any remedy required by law.",
       ],
       [
         "Launch review",
