@@ -1,0 +1,6 @@
+branch=$(git symbolic-ref --short HEAD)
+[ "$branch" = main ] || { echo "This project uses direct pushes from main only."; exit 1; }
+while read local_ref local_sha remote_ref remote_sha; do
+  [ "$remote_ref" = refs/heads/main ] || { echo "Only main may be pushed."; exit 1; }
+done
+npm run check

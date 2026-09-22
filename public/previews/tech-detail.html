@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>Durwood — technology detail sample</title
+  ><style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: #f7f5ee;
+      color: #203b30;
+      font:
+        16px/1.6 Arial,
+        sans-serif;
+    }
+    header {
+      padding: 20px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #d4d1c6;
+    }
+    header a {
+      font: 25px Georgia;
+      color: inherit;
+      text-decoration: none;
+    }
+    .label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .hero {
+      position: relative;
+      background: #1c3c30;
+      color: #f7f5ee;
+      min-height: 490px;
+      padding: 70px 6% 100px;
+      overflow: hidden;
+    }
+    .hero h1 {
+      font: normal clamp(48px, 6vw, 88px)/1.05 Georgia;
+      letter-spacing: -3px;
+      margin: 20px 0;
+    }
+    .hero p {
+      max-width: 480px;
+      color: #e0e5db;
+    }
+    .pine {
+      position: absolute;
+      width: 43%;
+      height: 340px;
+      object-fit: contain;
+      right: 5%;
+      top: 35px;
+    }
+    .trace {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 140px;
+      pointer-events: none;
+    }
+    .wire {
+      fill: none;
+      stroke: #b78260;
+      stroke-width: 1;
+      opacity: 0.5;
+    }
+    .pulse {
+      fill: none;
+      stroke: #f4d6a7;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-dasharray: 25 1500;
+      stroke-dashoffset: 25;
+      animation: travel 4s ease-in-out 1 both;
+      filter: drop-shadow(0 0 3px #daa46d);
+    }
+    @keyframes travel {
+      0% {
+        stroke-dashoffset: 25;
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      85% {
+        opacity: 1;
+      }
+      100% {
+        stroke-dashoffset: -1200;
+        opacity: 0;
+      }
+    }
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 44px 24px;
+    }
+    h2 {
+      font: 36px Georgia;
+      margin: 10px 0 24px;
+    }
+    .card {
+      border: 1px solid #c9ccbf;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      background: #faf8f2;
+      transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+    }
+    .card:hover,
+    .card:focus-within {
+      border-color: #a36e4f;
+      box-shadow: 0 0 0 3px #a36e4f12;
+    }
+    .art {
+      background: #e4e5da;
+      position: relative;
+      min-height: 280px;
+      display: grid;
+      place-content: center;
+      padding: 35px;
+    }
+    .art:before {
+      content: "";
+      position: absolute;
+      inset: 20px;
+      border: 1px solid #73846c44;
+    }
+    .art strong {
+      font: 44px/1.05 Georgia;
+      z-index: 1;
+    }
+    .art span {
+      margin-top: 24px;
+      font: 11px monospace;
+      letter-spacing: 2px;
+    }
+    .details {
+      padding: 30px 36px;
+    }
+    .details p {
+      color: #566355;
+    }
+    .specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      border-top: 1px solid #d4d1c6;
+      padding-top: 20px;
+      margin: 24px 0;
+    }
+    .specs dt {
+      font: 10px monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #667363;
+    }
+    .specs dd {
+      margin: 5px 0 0;
+      font-size: 13px;
+    }
+    .action {
+      color: #83452e;
+      border: 0;
+      border-bottom: 1px solid #ad8067;
+      background: transparent;
+      font: 14px Arial;
+      padding: 10px 0;
+      cursor: pointer;
+    }
+    .action span {
+      display: inline-block;
+      margin-left: 25px;
+      transition: transform 0.2s;
+    }
+    .action:hover span,
+    .action:focus-visible span {
+      transform: translateX(3px);
+    }
+    button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid #b16c43;
+      outline-offset: 5px;
+    }
+    .controls {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-top: 28px;
+    }
+    .controls button {
+      background: none;
+      border: 1px solid #9ca68d;
+      padding: 10px 16px;
+      color: inherit;
+      cursor: pointer;
+    }
+    .note {
+      font-size: 12px;
+      color: #687264;
+    }
+    #info {
+      padding: 20px;
+      border-left: 2px solid #a36e4f;
+      background: #edece3;
+    }
+    footer {
+      padding: 20px 6%;
+      border-top: 1px solid #d4d1c6;
+      font-size: 12px;
+      color: #687264;
+    }
+    @media (max-width: 700px) {
+      .pine {
+        opacity: 0.25;
+        width: 70%;
+        right: -15%;
+        top: 60px;
+      }
+      .hero {
+        padding: 45px 6% 100px;
+        min-height: 440px;
+      }
+      .hero h1,
+      .hero p {
+        position: relative;
+        z-index: 1;
+      }
+      .card {
+        grid-template-columns: 1fr;
+      }
+      .art {
+        min-height: 200px;
+      }
+      .details {
+        padding: 25px;
+      }
+      .specs {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      header .label {
+        max-width: 110px;
+        text-align: right;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *:before {
+        animation: none !important;
+        transition: none !important;
+      }
+      .pulse {
+        display: none;
+      }
+    }
+
+    body {
+      position: relative;
+    }
+    .hero {
+      overflow: visible;
+    }
+    .trace {
+      display: none;
+    }
+    main {
+      position: relative;
+      z-index: 2;
+    }
+    .card {
+      position: relative;
+      background: transparent;
+      isolation: isolate;
+    }
+    .art {
+      background: #e4e5dac7;
+    }
+    .details {
+      background: #faf8f2c7;
+    }
+    .signal-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: visible;
+    }
+    .signal-route {
+      fill: none;
+      stroke: #b78260;
+      stroke-width: 1;
+      opacity: 0.25;
+    }
+    .signal-light {
+      fill: none;
+      stroke: #f4ca94;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-dasharray: 22 2400;
+      stroke-dashoffset: 22;
+      filter: drop-shadow(0 0 4px #dfad76);
+      animation: signal-travel 6s linear both;
+    }
+    .signal-under {
+      filter: blur(4px);
+      stroke-width: 9;
+      stroke: #c58b5c;
+    }
+    .signal-end {
+      fill: none;
+      stroke: #d39a6b;
+      stroke-width: 2;
+      opacity: 0;
+      transform-box: fill-box;
+      transform-origin: center;
+      filter: blur(1.5px);
+      animation: signal-end 4s ease-out 5.2s both;
+    }
+    .signal-end.halo {
+      stroke-width: 8;
+      filter: blur(7px);
+    }
+    @keyframes signal-travel {
+      0% {
+        stroke-dashoffset: 22;
+        opacity: 0;
+      }
+      8% {
+        opacity: 1;
+      }
+      88% {
+        opacity: 1;
+      }
+      100% {
+        stroke-dashoffset: calc(-1 * var(--distance));
+        opacity: 0;
+      }
+    }
+    @keyframes signal-end {
+      0% {
+        opacity: 0;
+        transform: scale(0.55);
+      }
+      20% {
+        opacity: 0.8;
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.6);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .signal-light,
+      .signal-end {
+        display: none;
+      }
+    }
+
+    .circuit-etch {
+      fill: none;
+      stroke: #b5825f;
+      stroke-width: 1;
+      opacity: 0.42;
+      stroke-linejoin: round;
+    }
+    .circuit-etch circle {
+      stroke-width: 1.2;
+      fill: #a5764c12;
+    }
+    .signal-route {
+      opacity: 0.65;
+      stroke-width: 1.3;
+      stroke: #bc8c68;
+    }
+    .signal-light {
+      stroke: #ffe1ad;
+      stroke-width: 2;
+      filter: drop-shadow(0 0 2px #e6b779);
+    }
+    .signal-under {
+      stroke: #c38854;
+      stroke-width: 8;
+      filter: blur(3px);
+    }
+    .signal-end {
+      stroke: #b57845;
+      filter: blur(0.6px);
+    }
+    .signal-end.halo {
+      filter: blur(5px);
+    }
+
+    .needles {
+      transform-box: view-box;
+      animation: needle-breeze 12s ease-in-out infinite;
+    }
+    .needles.left {
+      transform-origin: 307px 500px;
+    }
+    .needles.crown {
+      transform-origin: 568px 351px;
+      animation-duration: 15s;
+      animation-delay: -4s;
+    }
+    .needles.right {
+      transform-origin: 705px 416px;
+      animation-duration: 13.5s;
+      animation-delay: -8s;
+    }
+    @keyframes needle-breeze {
+      0%,
+      100% {
+        transform: rotate(-3.2deg);
+      }
+      50% {
+        transform: rotate(3.2deg);
+      }
+    }
+    #motion {
+      position: absolute;
+      right: 6%;
+      bottom: 135px;
+      background: #1c3c30;
+      color: #eeeadd;
+      border: 1px solid #899b86;
+      border-radius: 3px;
+      padding: 9px 12px;
+      cursor: pointer;
+      font: 12px Arial;
+      z-index: 3;
+    }
+    .motion-paused .needles,
+    .motion-paused .signal-light,
+    .motion-paused .signal-end {
+      animation-play-state: paused !important;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .needles {
+        animation: none !important;
+      }
+    }
+  </style>
+  <header>
+    <a href="/">DURWOOD STUDIOS</a
+    ><span class="label">Design sample / not a product release</span>
+  </header>
+  <section class="hero">
+    <svg class="pine" viewBox="0 0 1000 800" aria-hidden="true">
+      <defs>
+        <clipPath id="needle-left">
+          <path d="M0 140H450V370L307 500L240 570L100 670H0Z" />
+        </clipPath>
+        <clipPath id="needle-crown">
+          <path d="M340 0H910V230L760 290L568 351L510 260Z" />
+        </clipPath>
+        <clipPath id="needle-right">
+          <path d="M1000 170V670L850 650L705 416L750 350Z" />
+        </clipPath>
+        <clipPath id="pine-wood">
+          <path
+            clip-rule="evenodd"
+            d="M0 0H1000V800H0Z M0 140H450V370L307 500L240 570L100 670H0Z M340 0H910V230L760 290L568 351L510 260Z M1000 170V670L850 650L705 416L750 350Z"
+          />
+        </clipPath>
+      </defs>
+      <g clip-path="url(#pine-wood)">
+        <use href="/assets/pine-branch.svg#pine-branch" />
+      </g>
+      <g class="needles left">
+        <g clip-path="url(#needle-left)">
+          <use href="/assets/pine-branch.svg#pine-branch" />
+        </g>
+      </g>
+      <g class="needles crown">
+        <g clip-path="url(#needle-crown)">
+          <use href="/assets/pine-branch.svg#pine-branch" />
+        </g>
+      </g>
+      <g class="needles right">
+        <g clip-path="url(#needle-right)">
+          <use href="/assets/pine-branch.svg#pine-branch" />
+        </g>
+      </g></svg
+    ><button id="motion" aria-pressed="false">Pause motion</button
+    ><span class="label">INDEPENDENT STUDIO / DIGITAL TOOLS & ASSETS</span>
+    <h1>Made with curiosity.<br />Built to be useful.</h1>
+    <p>
+      Thoughtful tools and creative resources.<br />Precisely made. Every detail
+      considered.
+    </p>
+    <svg
+      class="trace"
+      viewBox="0 0 1440 140"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <path class="wire" d="M1120 0V35L1075 80H300L260 120V140" />
+      <path class="pulse" d="M1120 0V35L1075 80H300L260 120V140" />
+    </svg>
+  </section>
+  <main>
+    <span class="label">The collection / sample content</span>
+    <h2>Clear on the outside. Considered underneath.</h2>
+    <article class="card">
+      <div class="art">
+        <strong>Studio<br />Interface Kit</strong
+        ><span>INTERFACES / COMPONENTS / DETAIL</span>
+      </div>
+      <div class="details">
+        <span class="label">Illustrative asset listing</span>
+        <p>
+          A sample card showing how buyers could inspect an asset before
+          choosing it.
+        </p>
+        <dl class="specs">
+          <div>
+            <dt>Format</dt>
+            <dd>SVG + Figma</dd>
+          </div>
+          <div>
+            <dt>Version</dt>
+            <dd>1.0 · sample</dd>
+          </div>
+          <div>
+            <dt>File size</dt>
+            <dd>8.4 MB · sample</dd>
+          </div>
+          <div>
+            <dt>Compatibility</dt>
+            <dd>Figma / browsers</dd>
+          </div>
+          <div>
+            <dt>License</dt>
+            <dd>View terms</dd>
+          </div>
+          <div>
+            <dt>Updated</dt>
+            <dd>21 Sep 2026</dd>
+          </div>
+        </dl>
+        <button
+          class="action"
+          id="inspect"
+          aria-expanded="false"
+          aria-controls="info"
+        >
+          Inspect the details <span aria-hidden="true">→</span>
+        </button>
+        <div id="info" hidden>
+          <strong>Know what’s included.</strong>
+          <p>
+            A real listing would show the exact files, supported software
+            versions, usage rights and preview images here. This is a design
+            demonstration; nothing is for sale.
+          </p>
+        </div>
+      </div>
+    </article>
+    <div class="controls">
+      <button id="replay">Replay light pulse</button
+      ><span class="note"
+        >Light slips underneath the card, softens, then settles into a fading
+        ring.</span
+      >
+    </div>
+  </main>
+  <footer>
+    Visual concept only. Sample specifications are fictional. The main website
+    is unchanged.
+  </footer>
+  <svg class="signal-layer" aria-hidden="true">
+    <defs>
+      <clipPath id="above"><rect /></clipPath>
+      <clipPath id="under"><rect /></clipPath>
+    </defs>
+    <g class="circuit-etch"></g>
+    <path class="signal-route" />
+    <path class="signal-light" clip-path="url(#above)" />
+    <path class="signal-light signal-under" clip-path="url(#under)" />
+    <circle class="signal-end halo" r="18" />
+    <circle class="signal-end" r="18" />
+  </svg>
+  <script>
+    const layer = document.querySelector(".signal-layer");
+    const motion = document.querySelector("#motion"),
+      preference = matchMedia("(prefers-reduced-motion: reduce)");
+    let paused = false;
+    try {
+      paused = localStorage.getItem("durwood-motion") === "paused";
+    } catch {}
+    function updateMotion() {
+      document.body.classList.toggle(
+        "motion-paused",
+        paused || preference.matches || document.hidden,
+      );
+      motion.textContent = preference.matches
+        ? "Reduced motion on"
+        : paused
+          ? "Resume motion"
+          : "Pause motion";
+      motion.disabled = preference.matches;
+      motion.setAttribute("aria-pressed", String(paused || preference.matches));
+      document.querySelector("#replay").disabled = paused || preference.matches;
+    }
+    motion.onclick = () => {
+      paused = !paused;
+      try {
+        localStorage.setItem("durwood-motion", paused ? "paused" : "playing");
+      } catch {}
+      updateMotion();
+    };
+    preference.addEventListener("change", updateMotion);
+    document.addEventListener("visibilitychange", updateMotion);
+    updateMotion();
+    function layoutSignal() {
+      const card = document.querySelector(".card").getBoundingClientRect(),
+        hero = document.querySelector(".hero").getBoundingClientRect();
+      const top = card.top + scrollY,
+        endX = card.left + card.width / 2,
+        endY = top + card.height / 2,
+        startX = innerWidth * 0.78,
+        startY = hero.bottom + scrollY - 110;
+      layer.setAttribute(
+        "viewBox",
+        `0 0 ${innerWidth} ${document.body.scrollHeight}`,
+      );
+      const d = `M${startX} ${startY}V${startY + 35}L${startX - 45} ${startY + 80}H${endX + 45}L${endX} ${startY + 125}V${endY}`;
+      layer
+        .querySelectorAll(":scope > path")
+        .forEach((p) => p.setAttribute("d", d));
+      const copper = layer.querySelector(".circuit-etch");
+      let etching = "";
+      // Individually spaced traces fan out into plated termination pads.
+      for (const offset of [-20, -10, 10, 20]) {
+        const sx = startX + offset,
+          ex = endX + offset,
+          bend = startY + 80 + offset;
+        const terminalY = endY - 25 - Math.abs(offset) * 1.7;
+        etching += `<path d="M${sx} ${startY - 22}V${bend - 45}L${sx - 45} ${bend}H${ex + 45}L${ex} ${bend + 45}V${terminalY}"/><circle cx="${sx}" cy="${startY - 22}" r="3"/><circle cx="${ex}" cy="${terminalY}" r="3.5"/>`;
+      }
+      const branchX = startX - 90,
+        branchY = startY + 80;
+      etching += `<path d="M${branchX} ${branchY}l-26 -26h-60"/><circle cx="${branchX - 86}" cy="${branchY - 26}" r="4"/><circle cx="${startX}" cy="${startY}" r="4"/><circle cx="${endX}" cy="${endY}" r="7"/><circle cx="${endX}" cy="${endY}" r="2"/>`;
+      copper.innerHTML = etching;
+      const length = layer.querySelector(".signal-route").getTotalLength();
+      layer.style.setProperty("--distance", length);
+      for (const [id, y, height] of [
+        ["above", 0, top],
+        ["under", top, document.body.scrollHeight - top],
+      ]) {
+        const r = layer.querySelector(`#${id} rect`);
+        r.setAttribute("x", 0);
+        r.setAttribute("y", y);
+        r.setAttribute("width", innerWidth);
+        r.setAttribute("height", height);
+      }
+      layer.querySelectorAll(":scope > circle").forEach((c) => {
+        c.setAttribute("cx", endX);
+        c.setAttribute("cy", endY);
+      });
+    }
+    function replay() {
+      if (paused || preference.matches) return;
+      layoutSignal();
+      const parts = layer.querySelectorAll(".signal-light,.signal-end");
+      parts.forEach((p) => (p.style.animation = "none"));
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() =>
+          parts.forEach((p) => (p.style.animation = "")),
+        ),
+      );
+    }
+    document.querySelector("#replay").onclick = replay;
+    document.querySelector("#inspect").onclick = (e) => {
+      const panel = document.querySelector("#info");
+      panel.hidden = !panel.hidden;
+      e.currentTarget.setAttribute("aria-expanded", String(!panel.hidden));
+      layoutSignal();
+    };
+    new ResizeObserver(layoutSignal).observe(document.querySelector("main"));
+    addEventListener("resize", layoutSignal);
+    layoutSignal();
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.querySelector("#replay").disabled = true;
+      document.querySelector("#replay").textContent = "Reduced motion enabled";
+    }
+  </script>
+</html>
